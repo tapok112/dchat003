@@ -6,6 +6,8 @@ from bot.db.commands import DataBase
 
 async def exit_chat(callback: CallbackQuery, state: FSMContext):
     db = DataBase()
+    user_data = await state.get_data()
+    await user_data['prompt_answer'].edit_reply_markup()
     await state.clear()
     await db.user.delete_messages(callback.from_user.id)
     await callback.message.answer(
